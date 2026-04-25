@@ -6,10 +6,10 @@ using System.Text;
 using AtlusScriptLibrary.Common.IO;
 using AtlusScriptLibrary.Common.Libraries;
 using AtlusScriptLibrary.Common.Logging;
-using AtlusScriptLibrary.Common.Text.Encodings;
 using AtlusScriptLibrary.MessageScriptLanguage;
 using AtlusScriptLibrary.MessageScriptLanguage.Compiler;
 using AtlusScriptLibrary.MessageScriptLanguage.Decompiler;
+
 
 
 namespace AtlusPM1MessageScriptEditor
@@ -45,7 +45,7 @@ namespace AtlusPM1MessageScriptEditor
             }
 
             var game = args.Length > 1 ? args[ 1 ].ToLowerInvariant() : null;
-            var encoding = AtlusEncoding.GetByName( game );
+            var encoding = AtlusScriptLibrary.Common.Text.Encodings.AtlusEncoding.Create( game );
 
             if ( path.EndsWith( "pm1", StringComparison.InvariantCultureIgnoreCase ) )
             {
