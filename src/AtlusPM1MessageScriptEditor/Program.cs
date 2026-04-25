@@ -9,7 +9,8 @@ using AtlusScriptLibrary.Common.Logging;
 using AtlusScriptLibrary.MessageScriptLanguage;
 using AtlusScriptLibrary.MessageScriptLanguage.Compiler;
 using AtlusScriptLibrary.MessageScriptLanguage.Decompiler;
-
+using AtlusScriptLibrary.Common.Text.Encodings;
+using AtlusScriptLibrary.Common.Text;
 
 
 namespace AtlusPM1MessageScriptEditor
@@ -45,7 +46,7 @@ namespace AtlusPM1MessageScriptEditor
             }
 
             var game = args.Length > 1 ? args[ 1 ].ToLowerInvariant() : null;
-            var encoding = AtlusScriptLibrary.Common.Text.Encodings.AtlusEncoding.Create( game );
+            var encoding = AtlusEncoding.Create( game );
 
             if ( path.EndsWith( "pm1", StringComparison.InvariantCultureIgnoreCase ) )
             {
@@ -53,7 +54,7 @@ namespace AtlusPM1MessageScriptEditor
                 var bytes = ExtractMessageScriptFromPM1( path );
                 if ( bytes != null && bytes.Length > 0 )
                 {
-                    using ( var decompiler = new MessageScriptDecompiler( File.CreateText( Path.ChangeExtension( path, "msg" ) ) ) )
+                    using ( var decompiler = new MessageScriptDecompiler( new FileTextWriter(Path.ChangeExtension(path, "msg") ) ) )
                     {
                         decompiler.Decompile( MessageScript.FromStream( new MemoryStream( bytes ) ) );
                     }
